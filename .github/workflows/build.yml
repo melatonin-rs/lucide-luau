@@ -5,6 +5,9 @@ on:
     - cron: '0 */6 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,11 +20,20 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
       - name: Install lucide-static
         run: npm install lucide-static@latest
 
       - name: Build converter
-        run: cargo build --release
+        run: cargo build --release -p lucide-builder
 
       - name: Convert icons
         run: ./target/release/lucide-builder
