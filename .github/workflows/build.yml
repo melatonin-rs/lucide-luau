@@ -1,0 +1,35 @@
+name: Build Icons
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install lucide-static
+        run: npm install lucide-static@latest
+
+      - name: Build converter
+        run: cargo build --release
+
+      - name: Convert icons
+        run: ./target/release/lucide-builder
+
+      - name: Commit icons
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add icons/
+          git diff --staged --quiet || git commit -m "Update icons $(date +%Y-%m-%d)"
+          git push
