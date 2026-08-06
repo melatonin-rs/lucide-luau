@@ -9,7 +9,6 @@ local Lucide = {
 
 local SOURCES = {
     "https://cdn.jsdelivr.net/gh/%s@main/icons/%s_%d.png",
-    "https://wsrv.nl/?url=cdn.jsdelivr.net/npm/lucide-static/icons/%s.svg&output=png&w=%d&filt=negate",
 }
 
 local PNG_SIG = string.char(137, 80, 78, 71)
