@@ -69,9 +69,11 @@ Works with any executor that supports:
 ## How it works
 
 - `crates/builder` renders every SVG from `lucide-static` to white PNG with Rust + resvg
-- GitHub Actions rebuilds the icon set daily and commits it to `icons/`
+- GitHub Actions rebuilds the icon set every 6 hours and commits it to `icons/`
 - the module downloads PNG from jsDelivr, caches it on disk, dedupes parallel requests
-- if an icon is missing locally, falls back to wsrv.nl
+- if an icon is missing, returns a clear error `[Lucide] Icon not found`
+
+No third-party image proxies. All icons live in this repo and are served via jsDelivr CDN.
 
 ## License
 
