@@ -1,0 +1,10 @@
+[package]
+name = "lucide-builder"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+resvg = "0.45"
+usvg = "0.45"
+rayon = "1.10"
+anyhow = "1.0"
